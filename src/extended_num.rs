@@ -3,13 +3,13 @@ use ExtendedNum::{PosInf, Finite, NegInf};
 
 #[derive(Clone, Copy, Debug)]
 pub enum ExtendedNum<T>
-where T: Ord + Add + TryFrom<i32> + Debug {
+where T: Ord + TryFrom<i32> + Debug {
   PosInf,
   Finite(T),
   NegInf,
 }
 impl<T> ExtendedNum<T>
-where T: Ord + Add + TryFrom<i32> + Debug {
+where T: Ord + TryFrom<i32> + Debug {
   pub fn zero() -> T {
     T::try_from(0).unwrap_or_else(|_| panic!())
   }
@@ -45,7 +45,7 @@ where T: Ord + Add + TryFrom<i32> + Debug {
   }
 }
 impl<T> PartialEq for ExtendedNum<T>
-where T: Ord + Add + TryFrom<i32> + Debug {
+where T: Ord + TryFrom<i32> + Debug {
   fn eq(&self, other: &Self) -> bool {
     match (self, other) {
       (PosInf, PosInf) => true,
@@ -56,16 +56,16 @@ where T: Ord + Add + TryFrom<i32> + Debug {
   }
 }
 impl<T> Eq for ExtendedNum<T>
-where T: Ord + Add + TryFrom<i32> + Debug {
+where T: Ord + TryFrom<i32> + Debug {
 }
 impl<T> PartialOrd for ExtendedNum<T>
-where T: Ord + Add + TryFrom<i32> + Debug {
+where T: Ord + TryFrom<i32> + Debug {
   fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
     Some(self.cmp(other))
   }
 }
 impl<T> Ord for ExtendedNum<T>
-where T: Ord + Add + TryFrom<i32> + Debug {
+where T: Ord + TryFrom<i32> + Debug {
   fn cmp(&self, other: &Self) -> Ordering {
     match (self, other) {
       (PosInf, PosInf) => Ordering::Equal,
@@ -95,7 +95,7 @@ where T: Ord + Add<Output = T> + TryFrom<i32> + Debug {
   }
 }
 impl<T> Sub for ExtendedNum<T>
-where T: Ord + Add + Sub<Output = T> + TryFrom<i32> + Debug {
+where T: Ord + Sub<Output = T> + TryFrom<i32> + Debug {
   type Output = Self;
   fn sub(self, rhs: Self) -> Self::Output {
     match (self, rhs) {
@@ -111,7 +111,7 @@ where T: Ord + Add + Sub<Output = T> + TryFrom<i32> + Debug {
   }
 }
 impl<T> Mul for ExtendedNum<T>
-where T: Ord + Add + Mul<Output = T> + TryFrom<i32> + Debug {
+where T: Ord + Mul<Output = T> + TryFrom<i32> + Debug {
   type Output = Self;
   fn mul(self, rhs: Self) -> Self::Output {
     match (self, rhs) {
@@ -133,7 +133,7 @@ where T: Ord + Add + Mul<Output = T> + TryFrom<i32> + Debug {
   }
 }
 impl<T> Div for ExtendedNum<T>
-where T: Ord + Add + Div<Output = T> + TryFrom<i32> + Debug {
+where T: Ord + Div<Output = T> + TryFrom<i32> + Debug {
   type Output = Self;
   fn div(self, rhs: Self) -> Self::Output {
     match (self, rhs) {
