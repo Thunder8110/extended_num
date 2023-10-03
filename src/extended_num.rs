@@ -90,7 +90,7 @@ where T: Ord + Add<Output = T> + TryFrom<i32> + Debug {
       (Finite(s), Finite(r)) => Finite(s + r),
       (Finite(_), PosInf) => PosInf,
       (Finite(_), NegInf) => NegInf,
-      (s, o) => panic!("Invalid addition: {s:?} + {o:?}"),
+      (s, r) => panic!("Invalid addition: {s:?} + {r:?}"),
     }
   }
 }
@@ -106,7 +106,7 @@ where T: Ord + Add + Sub<Output = T> + TryFrom<i32> + Debug {
       (Finite(s), Finite(r)) => Finite(s - r),
       (Finite(_), PosInf) => NegInf,
       (Finite(_), NegInf) => PosInf,
-      (s, o) => panic!("Invalid subtraction: {s:?} - {o:?}"),
+      (s, r) => panic!("Invalid subtraction: {s:?} - {r:?}"),
     }
   }
 }
@@ -128,7 +128,7 @@ where T: Ord + Add + Mul<Output = T> + TryFrom<i32> + Debug {
       (Finite(x), PosInf) if x < ExtendedNum::zero() => NegInf,
       (Finite(x), NegInf) if x > ExtendedNum::zero() => NegInf,
       (Finite(x), NegInf) if x < ExtendedNum::zero() => PosInf,
-      (s, o) => panic!("Invalid multiplication: {s:?} * {o:?}"),
+      (s, r) => panic!("Invalid multiplication: {s:?} * {r:?}"),
     }
   }
 }
@@ -143,8 +143,8 @@ where T: Ord + Add + Div<Output = T> + TryFrom<i32> + Debug {
       (NegInf, Finite(x)) if x < ExtendedNum::zero() => PosInf,
       (Finite(_), PosInf) => Finite(ExtendedNum::zero()),
       (Finite(_), NegInf) => Finite(ExtendedNum::zero()),
-      (Finite(s), Finite(o)) => Finite(s / o),
-      (s, o) => panic!("Invalid division: {s:?} / {o:?}"),
+      (Finite(s), Finite(r)) => Finite(s / r),
+      (s, r) => panic!("Invalid division: {s:?} / {r:?}"),
     }
   }
 }
